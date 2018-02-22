@@ -28,6 +28,16 @@ body {
 	}
 }
 
+.c-data{
+	position: absolute;
+	top: 10px;
+	left:10px;
+	p {
+		margin: 0;
+		font-size: 11px;
+	}
+}
+
 .c-player {
 	position: absolute;
 	bottom:20px;
@@ -38,7 +48,7 @@ body {
 	border-radius: 50%;
 }
 
-.c-bag {
+.c-bag { 
 	position: absolute;
 	bottom:20px;
 	left:200px;

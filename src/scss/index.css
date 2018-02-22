@@ -20,6 +20,14 @@ body {
     border: 1px solid #e0e0e0;
     background: white; }
 
+.c-data {
+  position: absolute;
+  top: 10px;
+  left: 10px; }
+  .c-data p {
+    margin: 0;
+    font-size: 11px; }
+
 .c-player {
   position: absolute;
   bottom: 20px;

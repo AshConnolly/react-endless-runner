@@ -10,11 +10,13 @@ class Game extends Component {
             animating: true,
             distance: 0,
             score: 0,
-            bgOffset: 0
+            bgOffset: 0,
+            bagOffset: 0,
         };
     
         // this.gamePause = this.gamePause.bind(this);
         this.gamePauseChanger = this.gamePauseChanger.bind(this);
+        this.moveBackground = this.moveBackground.bind(this);
     }
 
     
@@ -36,16 +38,13 @@ class Game extends Component {
     }
 
     moveBackground() {
-        let bg = this.refs.bg;
         if (this.state.animating === true) {
-            console.log('move bg');
-            bg.style.background == 'red';
             setInterval(() => {
+                if (this.state.animating === true) {
                 let currentXpos = this.state.bgOffset;
                 this.setState({ bgOffset: currentXpos + 1 })
-                console.log('test');
+                }
             }, fps);
-            console.log('this.refs.bg', this.refs.bg)
         }
     }
 
@@ -61,10 +60,18 @@ class Game extends Component {
                     <button onClick={() => this.gamePauseChanger('start')}>start</button>
                 </div>
 
+                <div className="c-data">
+                    <p>a: {this.state.animating}</p>
+                    <p>d: {this.state.distance}</p>
+                    <p>s: {this.state.score}</p>
+                    <p>bg: {this.state.bgOffset}</p>
+                    <p>bag: {this.state.bagOffset}</p>
+                </div>
+
                 <div className="c-player"></div>
                 <div className="c-bag"></div>
                 <div className="c-floor"></div>
-                <div className="c-bg" ref="bg" style={bgStyles}>
+                <div className="c-bg" style={bgStyles}>
                     <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>
