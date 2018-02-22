@@ -18,7 +18,8 @@ body {
     padding: 6px;
     margin-left: 5px;
     border: 1px solid #e0e0e0;
-    background: white; }
+    background: white;
+    cursor: pointer; }
 
 .c-data {
   position: absolute;

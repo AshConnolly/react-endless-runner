@@ -7,15 +7,14 @@ class Game extends Component {
         super(props);
 
         this.state = {
-            animating: true,
+            animating: false,
             distance: 0,
             score: 0,
             bgOffset: 0,
             bagOffset: 0,
         };
     
-        // this.gamePause = this.gamePause.bind(this);
-        this.gamePauseChanger = this.gamePauseChanger.bind(this);
+        this.pause = this.pause.bind(this);
         this.moveBackground = this.moveBackground.bind(this);
     }
 
@@ -27,10 +26,10 @@ class Game extends Component {
     // generate bags
     bagGenerator() {}
 
-    gamePauseChanger(option){
-        console.log('gamePauseChanger option:', option)
-        if (option === 'stop') { this.setState({animating : false}) }
-        if (option === 'start') { this.setState({animating : true}) }
+    pause(){
+        this.state.animating === false ? 
+        this.setState({animating : true}) : this.setState({animating : false}) ;
+        this.moveBackground();
     }
 
     componentDidMount(){
@@ -41,23 +40,21 @@ class Game extends Component {
         if (this.state.animating === true) {
             setInterval(() => {
                 if (this.state.animating === true) {
-                let currentXpos = this.state.bgOffset;
-                this.setState({ bgOffset: currentXpos + 1 })
+                    let currentXpos = this.state.bgOffset;
+                    this.setState({ bgOffset: currentXpos + 1 })
                 }
             }, fps);
         }
     }
 
     render() {
-        let bgStyles = {
-            transform: 'translateX(-' + this.state.bgOffset + 'px) translateY(-100%)'
-        }
+        let bgStyles = {transform: 'translateX(-' + this.state.bgOffset + 'px) translateY(-100%)'}
 
         return (
             <div className="l-game-wrapper">
                 <div className="c-ui-buttons">
-                    <button onClick={() => this.gamePauseChanger('stop')}>stop</button>
-                    <button onClick={() => this.gamePauseChanger('start')}>start</button>
+                    <button onClick={this.pause}>stop/start</button>
+                    {/*<button onClick={() => this.pause('start')}></button>*/}
                 </div>
 
                 <div className="c-data">
