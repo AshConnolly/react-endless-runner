@@ -5,6 +5,9 @@ body {
   font-family: sans-serif;
 }
 
+// colors
+
+
 .l-game-wrapper {
 	position: fixed;
 	top: 0;
@@ -13,14 +16,60 @@ body {
 	width:100%;
 }
 
-.c-player {
-
+.c-ui-buttons {
+	position: absolute;
+	top: 10px;
+	right:10px;
+	button {
+		padding: 6px;
+		margin-left: 5px;
+		border: 1px solid hsl(0,0%,88);
+		background: white;
+	}
 }
 
-.c-bg {
+.c-player {
+	position: absolute;
+	bottom:20px;
+	left:14px;
+	background: lightgrey;
+	height:12px;
+	width:12px;
+	border-radius: 50%;
+}
 
+.c-bag {
+	position: absolute;
+	bottom:20px;
+	left:200px;
+	background: lightgrey;
+	height:12px;
+	width:12px;
+}
+
+
+.c-bg {
+	position: fixed;
+	top: 100%;
+	left:0;
+	// height:100%;
+	width:100%;
+	// transform: translateY(-100%);	
+	display: flex;
+	justify-content:space-around;
+	z-index: -1;
+	&__elem {
+		width:50px;
+		height:80px;
+		background: hsl(0,0%,94);
+	}	
 }
 
 .c-floor {
-
+	position: absolute;
+	top:100%;
+	transform: translateY(-100%);
+	background: lightgrey;
+	height:8px;
+	width:100%;
 }

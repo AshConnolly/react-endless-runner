@@ -9,3 +9,51 @@ body {
   left: 0;
   height: 100%;
   width: 100%; }
+
+.c-ui-buttons {
+  position: absolute;
+  top: 10px;
+  right: 10px; }
+  .c-ui-buttons button {
+    padding: 6px;
+    margin-left: 5px;
+    border: 1px solid #e0e0e0;
+    background: white; }
+
+.c-player {
+  position: absolute;
+  bottom: 20px;
+  left: 14px;
+  background: lightgrey;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%; }
+
+.c-bag {
+  position: absolute;
+  bottom: 20px;
+  left: 200px;
+  background: lightgrey;
+  height: 12px;
+  width: 12px; }
+
+.c-bg {
+  position: fixed;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  z-index: -1; }
+  .c-bg__elem {
+    width: 50px;
+    height: 80px;
+    background: #f0f0f0; }
+
+.c-floor {
+  position: absolute;
+  top: 100%;
+  transform: translateY(-100%);
+  background: lightgrey;
+  height: 8px;
+  width: 100%; }
