@@ -15,7 +15,7 @@ class Game extends React.Component {
         };
     
         this.pauseGame = this.pauseGame.bind(this);
-        this.animateElements = this.animateElements.bind(this);
+        this.animateBackground = this.animateBackground.bind(this);
     }
 
     // itemGenerator() {}
@@ -28,26 +28,35 @@ class Game extends React.Component {
         // if (this.state.isPlaying === true) { this.setState({isPlaying : false}) }
     }
 
-    animateElements() {
+    animateBackground() {
         let animationTimer = setInterval(() => {
             if (this.state.isPlaying === true) {
                 if (this.state.bgOffset >= 130 ) {
                     this.setState({ bgOffset: 0 }) 
                 } else {
-                    this.setState({ bgOffset: this.state.bgOffset + 1 })
+                    this.setState({ bgOffset: this.state.bgOffset + 0.5 })
                 }
+
+                this.setState({ itemOffset: this.state.itemOffset + 0.7 })
+                this.setState({ distance: this.state.distance + 0.01 })
+                
             } else {
                 clearInterval(this.animationTimer);
             }
         }, fps);
     }
 
+    // hello(){
+    //     console.log('hello');
+    // }
     componentDidMount() {
-        this.animateElements();
+        this.animateBackground();
+        // window.requestAnimationFrame(this.hello)
     }
 
     render() {
         let bgStyles = {transform: 'translateX(-' + this.state.bgOffset + 'px)'}
+        let itemStyles = {transform: 'translateX(-' + this.state.itemOffset + 'px)'}
     
         return (
             <div className="l-game-wrapper">
@@ -56,7 +65,7 @@ class Game extends React.Component {
                 </div>
 
                 <div className="c-player"></div>
-                <div className="c-item"></div>
+                <div className="c-item" style={itemStyles}></div>
                 <div className="c-floor"></div>
                 <div className="c-bg" style={bgStyles}>
                     <div className="c-bg__elem"></div>
