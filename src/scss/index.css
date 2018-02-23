@@ -58,14 +58,16 @@ body {
   left: 0;
   width: 100%;
   display: flex;
-  z-index: -1;
-  animation: background-move 1.5s infinite linear; }
+  z-index: -1; }
   .c-bg__elem {
     width: 50px;
     height: 80px;
     margin: 0 40px;
     background: #f0f0f0;
     flex: 0 0 auto; }
+
+.c-bg-trans {
+  animation: background-move 1.5s infinite linear; }
 
 .c-floor {
   position: absolute;

@@ -58,7 +58,7 @@ class Game extends React.Component {
                 <div className="c-player"></div>
                 <div className="c-item"></div>
                 <div className="c-floor"></div>
-                <div className="c-bg" style={bgStyles}>
+                <div className={this.state.isPlaying ? 'c-bg-trans c-bg' : 'c-bg'} style={bgStyles}>
                     <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>

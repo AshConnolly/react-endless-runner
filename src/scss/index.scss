@@ -75,7 +75,6 @@ $transition-time-per-bg-elem: 1.5s;
 	width:100%;
 	display: flex;
 	z-index: -1;
-	animation: background-move $transition-time-per-bg-elem infinite linear;
 	&__elem {
 		width:$bg-elem-width;
 		height:80px;
@@ -83,6 +82,10 @@ $transition-time-per-bg-elem: 1.5s;
 		background: hsl(0,0%,94);
 		flex: 0 0 auto;
 	}	
+}
+
+.c-bg-trans {
+	animation: background-move $transition-time-per-bg-elem infinite linear;
 }
 
 .c-floor {
