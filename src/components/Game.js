@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 let fps = 1/60;
 
-class Game extends Component {
+class Game extends React.Component {
     constructor(props) {
         super(props);
 
@@ -47,8 +47,8 @@ class Game extends Component {
 
 
     render() {
-        let bgStyles = {transform: 'translateX(-' + this.state.bgOffset + 'px) translateY(-100%)'}
-
+        let bgStyles = {transform: 'translateX(-' + this.state.bgOffset + 'px)'}
+    
         return (
             <div className="l-game-wrapper">
                 <div className="c-ui-buttons">
@@ -59,6 +59,8 @@ class Game extends Component {
                 <div className="c-item"></div>
                 <div className="c-floor"></div>
                 <div className="c-bg" style={bgStyles}>
+                    <div className="c-bg__elem"></div>
+                    <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>

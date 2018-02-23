@@ -57,22 +57,31 @@ body {
 }
 
 
+
+$bg-elem-width: 50px;
+$bg-elem-margin: 40px;
+$repeatWidth: $bg-elem-width + ($bg-elem-margin *2);
+$transition-time-per-bg-elem: 1.5s;
+
+@keyframes background-move {
+	0% {transform: translateX(0)}
+	100% {transform: translateX(-#{$repeatWidth})}
+}
+
 .c-bg {
 	position: fixed;
-	top: 100%;
+	bottom: 0;
 	left:0;
-	// height:100%;
 	width:100%;
-	// transform: translateY(-100%);	
 	display: flex;
-	justify-content:space-around;
 	z-index: -1;
+	animation: background-move $transition-time-per-bg-elem infinite linear;
 	&__elem {
-		// border:1px solid salmon;
-		width:50px;
+		width:$bg-elem-width;
 		height:80px;
+		margin: 0 $bg-elem-margin;
 		background: hsl(0,0%,94);
-		// margin:0 100px;
+		flex: 0 0 auto;
 	}	
 }
 
