@@ -28,16 +28,17 @@ class Game extends React.Component {
     }
 
     animateElements() {
-        // if (this.state.isPlaying === true) {
-        //     let currentXpos = this.state.bgOffset;
-        //     this.setState({ bgOffset: currentXpos + 100 })
-        // } 
         let animationTimer = setInterval(() => {
             if (this.state.isPlaying === true) {
                 let currentXpos = this.state.bgOffset;
-                this.setState({ bgOffset: currentXpos + 1 })
+                if (this.state.bgOffset >= 130 ) {
+                    this.setState({ bgOffset: 0 }) 
+                } else {
+                    this.setState({ bgOffset: currentXpos + 1 })
+                }
             }
         }, fps);
+        
         if (this.state.isPlaying === true) {
             animationTimer;
         } else {
