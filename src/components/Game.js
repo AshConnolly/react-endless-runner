@@ -7,45 +7,44 @@ class Game extends Component {
         super(props);
 
         this.state = {
-            animating: false,
+            isPlaying: false,
             distance: 0,
             score: 0,
             bgOffset: 0,
-            bagOffset: 0,
+            itemOffset: 0,
         };
     
         this.pause = this.pause.bind(this);
-        this.moveBackground = this.moveBackground.bind(this);
+        this.animateElements = this.animateElements.bind(this);
     }
 
-    
-    animateElements() {
- 
-    }
-
-    // generate bags
-    bagGenerator() {}
+    // generate items
+    itemGenerator() {}
 
     pause(){
-        this.state.animating === false ? 
-        this.setState({animating : true}) : this.setState({animating : false}) ;
-        this.moveBackground();
+        if (this.state.isPlaying === true) { this.setState({isPlaying : false}) }
+        if (this.state.isPlaying === false) { this.setState({isPlaying : true}) }
+        this.animateElements();
     }
 
-    componentDidMount(){
-        this.moveBackground();
-    }
-
-    moveBackground() {
-        if (this.state.animating === true) {
-            setInterval(() => {
-                if (this.state.animating === true) {
-                    let currentXpos = this.state.bgOffset;
-                    this.setState({ bgOffset: currentXpos + 1 })
-                }
-            }, fps);
+    animateElements() {
+        // if (this.state.isPlaying === true) {
+        //     let currentXpos = this.state.bgOffset;
+        //     this.setState({ bgOffset: currentXpos + 100 })
+        // } 
+        let animationTimer = setInterval(() => {
+            if (this.state.isPlaying === true) {
+                let currentXpos = this.state.bgOffset;
+                this.setState({ bgOffset: currentXpos + 1 })
+            }
+        }, fps);
+        if (this.state.isPlaying === true) {
+            animationTimer;
+        } else {
+            clearInterval(animationTimer);
         }
     }
+
 
     render() {
         let bgStyles = {transform: 'translateX(-' + this.state.bgOffset + 'px) translateY(-100%)'}
@@ -56,16 +55,8 @@ class Game extends Component {
                     <button onClick={this.pause}>stop/start</button>
                 </div>
 
-                <div className="c-data">
-                    <p>a: {this.state.animating}</p>
-                    <p>d: {this.state.distance}</p>
-                    <p>s: {this.state.score}</p>
-                    <p>bg: {this.state.bgOffset}</p>
-                    <p>bag: {this.state.bagOffset}</p>
-                </div>
-
                 <div className="c-player"></div>
-                <div className="c-bag"></div>
+                <div className="c-item"></div>
                 <div className="c-floor"></div>
                 <div className="c-bg" style={bgStyles}>
                     <div className="c-bg__elem"></div>
@@ -73,6 +64,15 @@ class Game extends Component {
                     <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>
                 </div>
+
+                <div className="c-data">
+                    <p>a: {this.state.isPlaying === true ? 'true' : 'false'}</p>
+                    <p>d: {this.state.distance}</p>
+                    <p>s: {this.state.score}</p>
+                    <p>bg: {this.state.bgOffset}</p>
+                    <p>item: {this.state.itemOffset}</p>
+                </div>
+
 
             </div>
         );
