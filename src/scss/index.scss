@@ -6,8 +6,6 @@ body {
 }
 
 // colors
-
-
 .l-game-wrapper {
 	position: fixed;
 	top: 0;
@@ -70,9 +68,11 @@ body {
 	justify-content:space-around;
 	z-index: -1;
 	&__elem {
+		// border:1px solid salmon;
 		width:50px;
 		height:80px;
 		background: hsl(0,0%,94);
+		// margin:0 100px;
 	}	
 }
 

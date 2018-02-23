@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-let fps = 1/30;
+let fps = 1/60;
 
 class Game extends Component {
     constructor(props) {
@@ -54,7 +54,6 @@ class Game extends Component {
             <div className="l-game-wrapper">
                 <div className="c-ui-buttons">
                     <button onClick={this.pause}>stop/start</button>
-                    {/*<button onClick={() => this.pause('start')}></button>*/}
                 </div>
 
                 <div className="c-data">
@@ -69,6 +68,7 @@ class Game extends Component {
                 <div className="c-bag"></div>
                 <div className="c-floor"></div>
                 <div className="c-bg" style={bgStyles}>
+                    <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>
