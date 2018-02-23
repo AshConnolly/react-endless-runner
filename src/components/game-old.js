@@ -14,31 +14,30 @@ class Game extends React.Component {
             itemOffset: 0,
         };
     
-        this.pauseGame = this.pauseGame.bind(this);
+        this.pause = this.pause.bind(this);
         this.animateElements = this.animateElements.bind(this);
     }
 
-    // itemGenerator() {}
+    // generate items
+    itemGenerator() {}
 
-    pauseGame(){
+    pause(){
         if (this.state.isPlaying === true) { this.setState({isPlaying : false}) }
         if (this.state.isPlaying === false) { this.setState({isPlaying : true}) }
         this.animateElements();
     }
 
     animateElements() {
-
+        // if (this.state.isPlaying === true) {
+        //     let currentXpos = this.state.bgOffset;
+        //     this.setState({ bgOffset: currentXpos + 100 })
+        // } 
         let animationTimer = setInterval(() => {
             if (this.state.isPlaying === true) {
                 let currentXpos = this.state.bgOffset;
-                if (this.state.bgOffset >= 130 ) {
-                    this.setState({ bgOffset: 0 }) 
-                } else {
-                    this.setState({ bgOffset: currentXpos + 1 })
-                }
+                this.setState({ bgOffset: currentXpos + 1 })
             }
         }, fps);
-
         if (this.state.isPlaying === true) {
             animationTimer;
         } else {
@@ -53,28 +52,13 @@ class Game extends React.Component {
         return (
             <div className="l-game-wrapper">
                 <div className="c-ui-buttons">
-                    <button onClick={this.pauseGame}>stop/start</button>
+                    <button onClick={this.pause}>stop/start</button>
                 </div>
 
                 <div className="c-player"></div>
                 <div className="c-item"></div>
                 <div className="c-floor"></div>
-                <div className="c-bg" style={bgStyles}>
-                    <div className="c-bg__elem"></div>
-                    <div className="c-bg__elem"></div>
-                    <div className="c-bg__elem"></div>
-                    <div className="c-bg__elem"></div>
-                    <div className="c-bg__elem"></div>
-                    <div className="c-bg__elem"></div>
-                    <div className="c-bg__elem"></div>
-                    <div className="c-bg__elem"></div>
-                    <div className="c-bg__elem"></div>
-                    <div className="c-bg__elem"></div>
-                    <div className="c-bg__elem"></div>
-                    <div className="c-bg__elem"></div>
-                    <div className="c-bg__elem"></div>
-                    <div className="c-bg__elem"></div>
-                    <div className="c-bg__elem"></div>
+                <div className={this.state.isPlaying ? 'c-bg-trans c-bg' : 'c-bg'} style={bgStyles}>
                     <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>
