@@ -40,8 +40,6 @@ body {
 
 .c-item {
   position: absolute;
-  bottom: 20px;
-  left: 100px;
   background: lightgrey;
   height: 12px;
   width: 12px; }

@@ -54,14 +54,19 @@ class Game extends React.Component {
                     this.setState({ bgOffset: this.state.bgOffset + 0.5 })
                 }
                 
-                // console.log('player', this.getBounds(this.refs.player)); 
-                // console.log('item', this.getBounds(this.refs.item)); 
-
-                var test = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.item));
-                console.log(test);
-
                 this.setState({ itemOffset: this.state.itemOffset + 0.7 })
                 this.setState({ distance: this.state.distance + 0.01 })
+                
+                // collision detection
+                console.log(this.getBounds(this.refs.item));
+                let item = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.item));
+                let what = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.what));
+                var hi = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.hi));
+                if (item === true || what === true || hi === true) {
+                // if (item === true) {
+                    this.setState({ score: this.state.score + 1 })                    
+                }
+
                 
             } else {
                 clearInterval(this.animationTimer);
@@ -79,15 +84,25 @@ class Game extends React.Component {
     // pauseGame(option){
     //     if (this.state.isPlaying === false ) { 
     //         this.setState({isPlaying : true}) 
-    //         this.animationFrameStatus = requestAnimationFrame(this.animateElements)
+    //         animationFrameStatus = requestAnimationFrame(this.animateElements)
     //     } else { 
     //         this.setState({isPlaying : false}) 
-    //         this.animationFrameStatus = cancelAnimationFrame(this.animateElements)
+    //         animationFrameStatus = cancelAnimationFrame(this.animateElements)
     //     }
     // }
 
 
     // animateElements() {
+    //     function detectCollision(a, b) {
+    //         console.log()
+    //         return !(
+    //             ((a.y + a.height) < (b.y)) ||
+    //             (a.y > (b.y + b.height)) ||
+    //             ((a.x + a.width) < b.x) ||
+    //             (a.x > (b.x + b.width))
+    //         );
+    //     }
+
     //     if (this.state.isPlaying === true) {
     //         if (this.state.bgOffset >= 130 ) {
     //             this.setState({ bgOffset: 0 }) 
@@ -96,6 +111,16 @@ class Game extends React.Component {
     //         }
     //         this.setState({ itemOffset: this.state.itemOffset + 0.7 })
     //         this.setState({ distance: this.state.distance + 0.01 })
+
+    //        // collision detection
+    //         console.log(this.getBounds(this.refs.item));
+    //         let item = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.item));
+    //         let what = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.what));
+    //         var hi = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.hi));
+    //         if (item === true || what === true || hi === true) {
+    //         // if (item === true) {
+    //             this.setState({ score: this.state.score + 1 })                    
+    //         }
     //     }
 
     //     animationFrameStatus = requestAnimationFrame(this.animateElements);
@@ -105,17 +130,19 @@ class Game extends React.Component {
     // }
 
     render() {
-        let bgStyles = {transform: 'translateX(-' + this.state.bgOffset + 'px)'}
-        let itemStyles = {transform: 'translateX(-' + this.state.itemOffset + 'px)'}
+        let bgStyles = {transform: 'translate3d(-' + this.state.bgOffset + 'px, 0, 0)'}
+        let itemStyles = {transform: 'translate3d(-' + this.state.itemOffset + 'px, 0, 0)'}
     
         return (
             <div className="l-game-wrapper">
                 <div className="c-ui-buttons">
                     <button onClick={this.pauseGame}>start/stop</button>
                 </div>
-
+                
                 <div className="c-player" ref="player"></div>
-                <div className="c-item" ref="item" style={itemStyles}></div>
+                <div className="c-item" ref="item" style={{...itemStyles, bottom: '20px', left: '100px'}}></div>
+                <div className="c-item" ref="what" style={{...itemStyles, bottom: '20px', left: '200px'}}></div>
+                <div className="c-item" ref="hi" style={{...itemStyles, bottom: '20px', left: '300px'}}></div>
                 <div className="c-floor"></div>
                 <div className="c-bg" style={bgStyles}>
                     <div className="c-bg__elem"></div>
