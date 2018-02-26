@@ -27,15 +27,72 @@ class Game extends React.Component {
     }
 
 
-   pauseGame(option){
-        if (this.state.isPlaying === false ) { this.setState({isPlaying : true}) } 
-        else { this.setState({isPlaying : false}) }
-        ReactDOM.findDOMNode(this.refs.player).getBoundingClientRect();
+   // pauseGame(option){
+   //      if (this.state.isPlaying === false ) { this.setState({isPlaying : true}) } 
+   //      else { this.setState({isPlaying : false}) }
+   //      ReactDOM.findDOMNode(this.refs.player).getBoundingClientRect();
 
+   //  }
+
+   //  animateElements() {
+
+   //      function detectCollision(a, b) {
+   //          console.log()
+   //          return !(
+   //              ((a.y + a.height) < (b.y)) ||
+   //              (a.y > (b.y + b.height)) ||
+   //              ((a.x + a.width) < b.x) ||
+   //              (a.x > (b.x + b.width))
+   //          );
+   //      }
+
+   //      let animationTimer = setInterval(() => {
+   //          if (this.state.isPlaying === true) {
+   //              if (this.state.bgOffset >= 130 ) {
+   //                  this.setState({ bgOffset: 0 }) 
+   //              } else {
+   //                  this.setState({ bgOffset: this.state.bgOffset + 0.5 })
+   //              }
+                
+   //              this.setState({ itemOffset: this.state.itemOffset + 0.7 })
+   //              this.setState({ distance: this.state.distance + 0.01 })
+                
+   //              // collision detection
+   //              console.log(this.getBounds(this.refs.item));
+   //              let item = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.item));
+   //              let what = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.what));
+   //              var hi = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.hi));
+   //              if (item === true || what === true || hi === true) {
+   //              // if (item === true) {
+   //                  this.setState({ score: this.state.score + 1 })                    
+   //              }
+
+                
+   //          } else {
+   //              clearInterval(this.animationTimer);
+   //          }
+   //      }, fps);
+   //  }
+
+   //  componentDidMount() {
+   //      this.animateElements();
+   //      console.log('player', this.getBounds(this.refs.player)); 
+   //      console.log('item', this.getBounds(this.refs.item)); 
+   //  }
+    
+
+    pauseGame(option){
+        if (this.state.isPlaying === false ) { 
+            this.setState({isPlaying : true}) 
+            animationFrameStatus = requestAnimationFrame(this.animateElements)
+        } else { 
+            this.setState({isPlaying : false}) 
+            animationFrameStatus = cancelAnimationFrame(this.animateElements)
+        }
     }
 
-    animateElements() {
 
+    animateElements() {
         function detectCollision(a, b) {
             console.log()
             return !(
@@ -46,88 +103,31 @@ class Game extends React.Component {
             );
         }
 
-        let animationTimer = setInterval(() => {
-            if (this.state.isPlaying === true) {
-                if (this.state.bgOffset >= 130 ) {
-                    this.setState({ bgOffset: 0 }) 
-                } else {
-                    this.setState({ bgOffset: this.state.bgOffset + 0.5 })
-                }
-                
-                this.setState({ itemOffset: this.state.itemOffset + 0.7 })
-                this.setState({ distance: this.state.distance + 0.01 })
-                
-                // collision detection
-                console.log(this.getBounds(this.refs.item));
-                let item = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.item));
-                let what = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.what));
-                var hi = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.hi));
-                if (item === true || what === true || hi === true) {
-                // if (item === true) {
-                    this.setState({ score: this.state.score + 1 })                    
-                }
-
-                
+        if (this.state.isPlaying === true) {
+            if (this.state.bgOffset >= 130 ) {
+                this.setState({ bgOffset: 0 }) 
             } else {
-                clearInterval(this.animationTimer);
+                this.setState({ bgOffset: this.state.bgOffset + 0.5 })
             }
-        }, fps);
+            this.setState({ itemOffset: this.state.itemOffset + 0.7 })
+            this.setState({ distance: this.state.distance + 0.01 })
+
+           // collision detection
+            console.log(this.getBounds(this.refs.item));
+            let item = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.item));
+            let what = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.what));
+            var hi = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.hi));
+            if (item === true || what === true || hi === true) {
+            // if (item === true) {
+                this.setState({ score: this.state.score + 1 })                    
+            }
+        }
+
+        animationFrameStatus = requestAnimationFrame(this.animateElements);
     }
 
     componentDidMount() {
-        this.animateElements();
-        console.log('player', this.getBounds(this.refs.player)); 
-        console.log('item', this.getBounds(this.refs.item)); 
     }
-    
-
-    // pauseGame(option){
-    //     if (this.state.isPlaying === false ) { 
-    //         this.setState({isPlaying : true}) 
-    //         animationFrameStatus = requestAnimationFrame(this.animateElements)
-    //     } else { 
-    //         this.setState({isPlaying : false}) 
-    //         animationFrameStatus = cancelAnimationFrame(this.animateElements)
-    //     }
-    // }
-
-
-    // animateElements() {
-    //     function detectCollision(a, b) {
-    //         console.log()
-    //         return !(
-    //             ((a.y + a.height) < (b.y)) ||
-    //             (a.y > (b.y + b.height)) ||
-    //             ((a.x + a.width) < b.x) ||
-    //             (a.x > (b.x + b.width))
-    //         );
-    //     }
-
-    //     if (this.state.isPlaying === true) {
-    //         if (this.state.bgOffset >= 130 ) {
-    //             this.setState({ bgOffset: 0 }) 
-    //         } else {
-    //             this.setState({ bgOffset: this.state.bgOffset + 0.5 })
-    //         }
-    //         this.setState({ itemOffset: this.state.itemOffset + 0.7 })
-    //         this.setState({ distance: this.state.distance + 0.01 })
-
-    //        // collision detection
-    //         console.log(this.getBounds(this.refs.item));
-    //         let item = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.item));
-    //         let what = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.what));
-    //         var hi = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.hi));
-    //         if (item === true || what === true || hi === true) {
-    //         // if (item === true) {
-    //             this.setState({ score: this.state.score + 1 })                    
-    //         }
-    //     }
-
-    //     animationFrameStatus = requestAnimationFrame(this.animateElements);
-    // }
-
-    // componentDidMount() {
-    // }
 
     render() {
         let bgStyles = {transform: 'translate3d(-' + this.state.bgOffset + 'px, 0, 0)'}
