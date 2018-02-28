@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom';
 
 let fps = 1/60;
 let animationFrameStatus;
+let gameSpeed = 1; // WIP
 
 class Game extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            isPlaying: false,
+            isPlaying: true,
+            isJumping: false,
             distance: 0,
             score: 0,
             bgOffset: 0,
@@ -107,10 +109,10 @@ class Game extends React.Component {
             if (this.state.bgOffset >= 130 ) {
                 this.setState({ bgOffset: 0 }) 
             } else {
-                this.setState({ bgOffset: this.state.bgOffset + 0.5 })
+                this.setState({ bgOffset: this.state.bgOffset + (0.5 * gameSpeed) })
             }
-            this.setState({ itemOffset: this.state.itemOffset + 0.7 })
-            this.setState({ distance: this.state.distance + 0.01 })
+            this.setState({ itemOffset: this.state.itemOffset + (0.7 * gameSpeed) })
+            this.setState({ distance: this.state.distance + (0.01 * gameSpeed) })
 
            // collision detection
             console.log(this.getBounds(this.refs.item));
@@ -127,19 +129,32 @@ class Game extends React.Component {
     }
 
     componentDidMount() {
+        // set player styles base don state?
+        // if isJumping player addclass  (could then use easing) or do inline styling?
+        // then 300 ms undo class or inline style
+        // timer to prevent activation during transition
+
+        document.addEventListener('keypress', (event) => {
+            if(event.keyCode === 32 && this.state.isJumping === false) {
+                this.state.isJumping === false ? this.setState({ isJumping: true }) : this.setState({ isJumping: false }) ;
+                setTimeout( ()=> {
+                    this.state.isJumping === true ? this.setState({ isJumping: false }) : '' ;
+                },1050);
+            }
+        });
     }
 
     render() {
         let bgStyles = {transform: 'translate3d(-' + this.state.bgOffset + 'px, 0, 0)'}
         let itemStyles = {transform: 'translate3d(-' + this.state.itemOffset + 'px, 0, 0)'}
-    
+
         return (
             <div className="l-game-wrapper">
                 <div className="c-ui-buttons">
                     <button onClick={this.pauseGame}>start/stop</button>
                 </div>
                 
-                <div className="c-player" ref="player"></div>
+                <div className={'c-player ' + (this.state.isJumping === true ? 'is-jumping' : '') } ref="player"></div>
                 <div className="c-item" ref="item" style={{...itemStyles, bottom: '20px', left: '100px'}}></div>
                 <div className="c-item" ref="what" style={{...itemStyles, bottom: '20px', left: '200px'}}></div>
                 <div className="c-item" ref="hi" style={{...itemStyles, bottom: '20px', left: '300px'}}></div>

@@ -37,6 +37,18 @@ body {
 	}
 }
 
+@keyframes player-jump {
+	0% {
+		transform:translateY(-0px)
+	}
+	50% {
+		transform:translateY(-60px)
+	}
+	100% {
+		transform:translateY(-0px)
+	}
+}
+
 .c-player {
 	position: absolute;
 	bottom:20px;
@@ -45,12 +57,16 @@ body {
 	height:12px;
 	width:12px;
 	border-radius: 50%;
+	// transition: transform 0.5s cubic-bezier(0, 0, 0, 1.59);
+	animation-timing-function: cubic-bezier(0, 0, 0, 1.59);
+	animation-duration: 1s;
+	&.is-jumping {
+		animation-name: player-jump;
+	}
 }
 
 .c-item { 
 	position: absolute;
-	// bottom:20px;
-	// left:200px;
 	background: lightgrey;
 	height:12px;
 	width:12px;
