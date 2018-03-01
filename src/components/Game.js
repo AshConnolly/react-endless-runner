@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 let fps = 1/60;
 let animationFrameStatus;
-let gameSpeed = 1; // WIP
+let jumpDuration = 1000;
 
 class Game extends React.Component {
     constructor(props) {
@@ -12,6 +12,7 @@ class Game extends React.Component {
         this.state = {
             isPlaying: true,
             isJumping: false,
+            gameSpeed: 5,
             distance: 0,
             score: 0,
             bgOffset: 0,
@@ -83,7 +84,8 @@ class Game extends React.Component {
    //  }
     
 
-    pauseGame(option){
+    pauseGame(){
+        // if(e) e.preventDefault();
         if (this.state.isPlaying === false ) { 
             this.setState({isPlaying : true}) 
             animationFrameStatus = requestAnimationFrame(this.animateElements)
@@ -95,6 +97,7 @@ class Game extends React.Component {
 
 
     animateElements() {
+        let gameSpeed = this.state.gameSpeed;
         function detectCollision(a, b) {
             console.log()
             return !(
@@ -105,6 +108,9 @@ class Game extends React.Component {
             );
         }
 
+        // increase speed
+        this.setState({gameSpeed: (this.state.distance / 5) + 5 });
+
         if (this.state.isPlaying === true) {
             if (this.state.bgOffset >= 130 ) {
                 this.setState({ bgOffset: 0 }) 
@@ -112,15 +118,45 @@ class Game extends React.Component {
                 this.setState({ bgOffset: this.state.bgOffset + (0.5 * gameSpeed) })
             }
             this.setState({ itemOffset: this.state.itemOffset + (0.7 * gameSpeed) })
-            this.setState({ distance: this.state.distance + (0.01 * gameSpeed) })
+            this.setState({ distance: this.state.distance + 0.01  })
+    
 
-           // collision detection
-            console.log(this.getBounds(this.refs.item));
-            let item = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.item));
-            let what = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.what));
-            var hi = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.hi));
-            if (item === true || what === true || hi === true) {
-            // if (item === true) {
+            /* 
+            
+            Collision detection based on ref / class:
+                multiple of the same ref
+                need to track a bunch of elements 
+                do it in an array, with a document selector
+
+            DOM items generated and removed
+
+                add elements to the dom then delete them
+                this should be state shouldnt it....
+                have each bag in the react state in an array
+
+                bags : {
+                    bag1 : {bottom: 20px; transform: translate3d(-50px,0,0)},
+                    bag2 : {bottom: 20px; transform: translate3d(-50px,0,0)},
+                }
+
+                map to output a component
+                <item bottom={} right={} />
+
+            */
+
+            // collision detection
+            // console.log(this.getBounds(this.refs.item));
+            // ReactDOM.findDOMNode('.c-item')
+            // console.log('ReactDOM.findDOMNode(\'.c-item\')', ReactDOM.findDOMNode('.c-item'))
+            // 
+            ReactDOM.findDOMNode(this.refs.item);
+            // console.log('ReactDOM.findDOMNode(<Game />).getElementsByClassName(\'c-item\')', ReactDOM.findDOMNode(<Game />).getElementsByClassName('c-item'))
+
+             // Returns the elements
+
+            var item = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.item));
+            // if (item === true || what === true || hi === true) {
+            if (item === true) {
                 this.setState({ score: this.state.score + 1 })                    
             }
         }
@@ -129,21 +165,25 @@ class Game extends React.Component {
     }
 
     componentDidMount() {
-        // set player styles base don state?
-        // if isJumping player addclass  (could then use easing) or do inline styling?
-        // then 300 ms undo class or inline style
-        // timer to prevent activation during transition
+        // Todo speed based on distance loop or division
+        // setInterval(() => {
+        //     let currentGameSpeed = this.state.gameSpeed;
+        //     this.setState({gameSpeed: currentGameSpeed + .5})
+        // },500);
 
         document.addEventListener('keypress', (event) => {
             if(event.keyCode === 32 && this.state.isJumping === false) {
+                (event).preventDefault();
                 this.state.isJumping === false ? this.setState({ isJumping: true }) : this.setState({ isJumping: false }) ;
                 setTimeout( ()=> {
                     this.state.isJumping === true ? this.setState({ isJumping: false }) : '' ;
-                },1050);
+                }, jumpDuration + 50);
             }
-        });
+        })
     }
 
+
+    // style={{animationDuration: (1 / gameSpeed) + 's' }}
     render() {
         let bgStyles = {transform: 'translate3d(-' + this.state.bgOffset + 'px, 0, 0)'}
         let itemStyles = {transform: 'translate3d(-' + this.state.itemOffset + 'px, 0, 0)'}
@@ -151,13 +191,14 @@ class Game extends React.Component {
         return (
             <div className="l-game-wrapper">
                 <div className="c-ui-buttons">
-                    <button onClick={this.pauseGame}>start/stop</button>
+                    <button onClick={() => this.pauseGame()}>start/stop</button>
                 </div>
                 
-                <div className={'c-player ' + (this.state.isJumping === true ? 'is-jumping' : '') } ref="player"></div>
-                <div className="c-item" ref="item" style={{...itemStyles, bottom: '20px', left: '100px'}}></div>
-                <div className="c-item" ref="what" style={{...itemStyles, bottom: '20px', left: '200px'}}></div>
-                <div className="c-item" ref="hi" style={{...itemStyles, bottom: '20px', left: '300px'}}></div>
+                <div className={'c-player ' + (this.state.isJumping === true ? 'is-jumping' : '') } ref="player"
+                style={{animationDuration: (jumpDuration / 1000) + 's'}}></div>
+                <div className="c-item" ref="item" style={{...itemStyles, bottom: '20px', left: '200px'}}></div>
+                <div className="c-item" ref="item" style={{...itemStyles, bottom: '20px', left: '300px'}}></div>
+                <div className="c-item" ref="item" style={{...itemStyles, bottom: '20px', left: '400px'}}></div>
                 <div className="c-floor"></div>
                 <div className="c-bg" style={bgStyles}>
                     <div className="c-bg__elem"></div>
@@ -186,7 +227,8 @@ class Game extends React.Component {
                 <div className="c-data">
                     <p>a: {this.state.isPlaying === true ? 'true' : 'false'}</p>
                     <p>d: {this.state.distance}</p>
-                    <p>s: {this.state.score}</p>
+                    <p>sp: {this.state.gameSpeed}</p>
+                    <p>sc: {this.state.score}</p>
                     <p>bg: {this.state.bgOffset}</p>
                     <p>item: {this.state.itemOffset}</p>
                 </div>

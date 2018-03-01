@@ -29,14 +29,6 @@ body {
     margin: 0;
     font-size: 13px; }
 
-@keyframes player-jump {
-  0% {
-    transform: translateY(0px); }
-  50% {
-    transform: translateY(-60px); }
-  100% {
-    transform: translateY(0px); } }
-
 .c-player {
   position: absolute;
   bottom: 20px;
@@ -45,8 +37,15 @@ body {
   height: 12px;
   width: 12px;
   border-radius: 50%;
-  animation-timing-function: cubic-bezier(0, 0, 0, 1.59);
-  animation-duration: 1s; }
+  animation-timing-function: cubic-bezier(0.45, 1.07, 0.76, 1); }
+
+@keyframes player-jump {
+  0% {
+    transform: translateY(0px); }
+  50% {
+    transform: translateY(-60px); }
+  100% {
+    transform: translateY(0px); } }
   .c-player.is-jumping {
     animation-name: player-jump; }
 
