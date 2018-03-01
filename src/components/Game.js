@@ -10,7 +10,7 @@ class Game extends React.Component {
         super(props);
 
         this.state = {
-            isPlaying: true,
+            isPlaying: false,
             isJumping: false,
             gameSpeed: 5,
             distance: 0,
@@ -119,44 +119,15 @@ class Game extends React.Component {
             }
             this.setState({ itemOffset: this.state.itemOffset + (0.7 * gameSpeed) })
             this.setState({ distance: this.state.distance + 0.01  })
-    
 
-            /* 
-            
-            Collision detection based on ref / class:
-                multiple of the same ref
-                need to track a bunch of elements 
-                do it in an array, with a document selector
 
-            DOM items generated and removed
-
-                add elements to the dom then delete them
-                this should be state shouldnt it....
-                have each bag in the react state in an array
-
-                bags : {
-                    bag1 : {bottom: 20px; transform: translate3d(-50px,0,0)},
-                    bag2 : {bottom: 20px; transform: translate3d(-50px,0,0)},
-                }
-
-                map to output a component
-                <item bottom={} right={} />
-
-            */
-
-            // collision detection
-            // console.log(this.getBounds(this.refs.item));
-            // ReactDOM.findDOMNode('.c-item')
-            // console.log('ReactDOM.findDOMNode(\'.c-item\')', ReactDOM.findDOMNode('.c-item'))
-            // 
-            ReactDOM.findDOMNode(this.refs.item);
-            // console.log('ReactDOM.findDOMNode(<Game />).getElementsByClassName(\'c-item\')', ReactDOM.findDOMNode(<Game />).getElementsByClassName('c-item'))
-
-             // Returns the elements
-
-            var item = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.item));
-            // if (item === true || what === true || hi === true) {
-            if (item === true) {
+           // collision detection
+            console.log(this.getBounds(this.refs.item));
+            let item = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.item));
+            let what = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.what));
+            var hi = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.hi));
+            if (item === true || what === true || hi === true) {
+            // if (item === true) {
                 this.setState({ score: this.state.score + 1 })                    
             }
         }
@@ -172,18 +143,17 @@ class Game extends React.Component {
         // },500);
 
         document.addEventListener('keypress', (event) => {
-            if(event.keyCode === 32 && this.state.isJumping === false) {
+            if(event.keyCode === 32 && this.state.isJumping === false && this.state.isPlaying === true) {
+                console.log('1');
                 (event).preventDefault();
                 this.state.isJumping === false ? this.setState({ isJumping: true }) : this.setState({ isJumping: false }) ;
                 setTimeout( ()=> {
                     this.state.isJumping === true ? this.setState({ isJumping: false }) : '' ;
                 }, jumpDuration + 50);
             }
-        })
+        });
     }
 
-
-    // style={{animationDuration: (1 / gameSpeed) + 's' }}
     render() {
         let bgStyles = {transform: 'translate3d(-' + this.state.bgOffset + 'px, 0, 0)'}
         let itemStyles = {transform: 'translate3d(-' + this.state.itemOffset + 'px, 0, 0)'}
@@ -196,9 +166,9 @@ class Game extends React.Component {
                 
                 <div className={'c-player ' + (this.state.isJumping === true ? 'is-jumping' : '') } ref="player"
                 style={{animationDuration: (jumpDuration / 1000) + 's'}}></div>
-                <div className="c-item" ref="item" style={{...itemStyles, bottom: '20px', left: '200px'}}></div>
-                <div className="c-item" ref="item" style={{...itemStyles, bottom: '20px', left: '300px'}}></div>
-                <div className="c-item" ref="item" style={{...itemStyles, bottom: '20px', left: '400px'}}></div>
+                <div className="c-item" ref="item" style={{...itemStyles, bottom: '20px', left: '100px'}}></div>
+                <div className="c-item" ref="what" style={{...itemStyles, bottom: '20px', left: '200px'}}></div>
+                <div className="c-item" ref="hi" style={{...itemStyles, bottom: '20px', left: '300px'}}></div>
                 <div className="c-floor"></div>
                 <div className="c-bg" style={bgStyles}>
                     <div className="c-bg__elem"></div>
