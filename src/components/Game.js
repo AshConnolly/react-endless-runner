@@ -5,6 +5,17 @@ let fps = 1/60;
 let animationFrameStatus;
 let jumpDuration = 1000;
 
+
+
+class ItemTest extends Component {
+    render() {
+        return (
+            <div className="c-ite" props={this.props}>test {this.props.details.bottom}</div> 
+        );
+    }
+}
+
+
 class Game extends React.Component {
     constructor(props) {
         super(props);
@@ -17,6 +28,10 @@ class Game extends React.Component {
             score: 0,
             bgOffset: 0,
             itemOffset: 0,
+            items: {
+                item1: {bottom: 10, left: 200},
+                item2: {bottom: 20, left: 300}
+            }
         };
     
         this.pauseGame = this.pauseGame.bind(this); 
@@ -76,11 +91,21 @@ class Game extends React.Component {
    //          }
    //      }, fps);
    //  }
-
-   //  componentDidMount() {
-   //      this.animateElements();
-   //      console.log('player', this.getBounds(this.refs.player)); 
-   //      console.log('item', this.getBounds(this.refs.item)); 
+   
+    //  componentDidMount() {
+    //      this.animateElements();
+    //      console.log('player', this.getBounds(this.refs.player)); 
+    //      console.log('item', this.getBounds(this.refs.item)); 
+    //    document.addEventListener('keypress', (event) => {
+    //     if(event.keyCode === 32 && this.state.isJumping === false && this.state.isPlaying === true) {
+    //         console.log('1');
+    //         (event).preventDefault();
+    //         this.state.isJumping === false ? this.setState({ isJumping: true }) : this.setState({ isJumping: false }) ;
+    //         setTimeout( ()=> {
+    //             this.state.isJumping === true ? this.setState({ isJumping: false }) : '' ;
+    //         }, jumpDuration + 50);
+    //     }
+// });
    //  }
     
 
@@ -89,7 +114,7 @@ class Game extends React.Component {
         if (this.state.isPlaying === false ) { 
             this.setState({isPlaying : true}) 
             animationFrameStatus = requestAnimationFrame(this.animateElements)
-        } else { 
+        } else {    
             this.setState({isPlaying : false}) 
             animationFrameStatus = cancelAnimationFrame(this.animateElements)
         }
@@ -135,6 +160,11 @@ class Game extends React.Component {
         animationFrameStatus = requestAnimationFrame(this.animateElements);
     }
 
+    itemRender(key) {
+        // console.log('this.state.items[item1]', this.state); 
+        return ( <div className="c-ite " key={key}> test </div> )
+    }
+
     componentDidMount() {
         // Todo speed based on distance loop or division
         // setInterval(() => {
@@ -156,7 +186,10 @@ class Game extends React.Component {
 
     render() {
         let bgStyles = {transform: 'translate3d(-' + this.state.bgOffset + 'px, 0, 0)'}
-        let itemStyles = {transform: 'translate3d(-' + this.state.itemOffset + 'px, 0, 0)'}
+        let itemStyles = {transform: 'translate3d(-' + this.state.itemOffset + 'px, 0, 0)'} 
+        // let itemLet = 
+
+        // <p>{Object.keys(this.state.items).map(key => <ItemTest key={key} details={this.state.items[key]} />)}</p>
 
         return (
             <div className="l-game-wrapper">
@@ -176,7 +209,7 @@ class Game extends React.Component {
                     <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>
-                    <div className="c-bg__elem"></div>
+                    <div className="c-bg__elem"></div> 
                     <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>
                     <div className="c-bg__elem"></div>
@@ -201,6 +234,7 @@ class Game extends React.Component {
                     <p>sc: {this.state.score}</p>
                     <p>bg: {this.state.bgOffset}</p>
                     <p>item: {this.state.itemOffset}</p>
+                    {Object.keys(this.state.items).map(key => <div className="c-ite " key={key}> test {this.state.items[key].bottom} </div>)}
                 </div>
 
             </div>
