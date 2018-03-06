@@ -5,17 +5,6 @@ let fps = 1/60;
 let animationFrameStatus;
 let jumpDuration = 1000;
 
-
-
-class ItemTest extends Component {
-    render() {
-        return (
-            <div className="c-ite" props={this.props}>test {this.props.details.bottom}</div> 
-        );
-    }
-}
-
-
 class Game extends React.Component {
     constructor(props) {
         super(props);
@@ -29,12 +18,16 @@ class Game extends React.Component {
             bgOffset: 0,
             itemOffset: 0,
             items: {
-                item1: {bottom: 20, left: 100},
-                item2: {bottom: 20, left: 200},
-                item3: {bottom: 20, left: 300}
+                item1: {bottom: 20, left: 100, touched: false},
+                item2: {bottom: 20, left: 200, touched: false},
+                item3: {bottom: 40, left: 300, touched: false},
+                item4: {bottom: 20, left: 400, touched: false},
+                item5: {bottom: 50, left: 500, touched: false},
+                item6: {bottom: 30, left: 600, touched: false}
             }
         };
-    
+
+        this.domRefs = {}; // to store dom refs    
         this.pauseGame = this.pauseGame.bind(this); 
         this.animateElements = this.animateElements.bind(this);
         this.refTest = this.refTest.bind(this);
@@ -150,20 +143,52 @@ class Game extends React.Component {
 
 
            // collision detection
-
             /* TODO loop thourgh all children in state object and create hit detection for refs 
              eg - https://stackoverflow.com/questions/35601904/react-get-all-children-refs
-             Object.keys(this.refs).forEach(key =>
-                const ref = this.refs[key];
-                ...
-            );
+             */
+
+            // for each element in the state.items 
+            // collision detection
+            // add class to it as touched
+
+            let collisionObject = {};
+            Object.keys(this.state.items).forEach((item) => {
+                console.log(item + 'wtf')
+                // console.log('this.refs[item]', this.domRefs[item])
+                // console.log('this.refs.player', this.refs.player)
+                var isCollide = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.domRefs[item]))
+                if (isCollide === true) {
+                    // here - updating state object based on 
+                    let newState = {
+                        [item] : { touched : true }
+                    }
+                    console.log('newState', newState)
+                    // this.setState({ items : [...this.state.items, newState] })
+                    //HERE SETSTATE TO TOUCHED
+                    this.setState({ items : 'hello' })
+                    console.log(`${item} true`)
+                }
+                    
+                    collisionObject[item] = isCollide;
+            })
+
+            // check if element is off left of page.
+
+            console.log('collisionObject', collisionObject)
+
+        // let obj = this.state.items;
+        // for (var property in obj) {
+        //     if (obj.hasOwnProperty(property)) {
+        //         console.log(property)
+        //     }
+        // }
+            
             // also add in a class addition to prevent scores increasing several times for each hit 
-            */
-            // let item1 = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.item1));
-            // let item2 = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.item2));
-            // var item3= detectCollision(this.getBounds(this.refs.player), this.getBounds(this.refs.item3));
+            // let item1 = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.domRrefs.item1));
+            // let item2 = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.domRefs.item2));
+            // var item3= detectCollision(this.getBounds(this.refs.player), this.getBounds(this.domRefs.item3));
             // if (item1 === true || item2 === true || item3 === true) {
-            //     this.setState({ score: this.state.score + 1 })                    
+                // this.setState({ score: this.state.score + 1 })                    
             // }
         }
 
@@ -173,19 +198,20 @@ class Game extends React.Component {
     itemRender(key) {
         // console.log('this.state.items[item1]', this.state); 
         let test = key;
-        console.log('test', test)
         let thisItem = this.state.items[key];
         let styles = {
             transform: 'translate3d(-' + this.state.itemOffset + 'px, 0, 0)', 
             bottom: thisItem.bottom, 
             left: thisItem.left,
         }
-        return ( <div className="c-item" key={key} ref={key} style={styles}></div> )
+        return ( <div className={'c-item ' + key} key={key} ref={(ref) => {this.domRefs[key] = ref}} style={styles}></div> )
     }
 
     refTest(passed) {
         let target = 'item' + passed;
-        console.log('refTest', this.refs[target])        
+        console.log('target', target)
+        // console.log('this.domRrefs.item1', this.domRrefs.item1)
+        console.log('refTest', this.domRefs[target]);
     }
 
     componentDidMount() {
@@ -258,9 +284,23 @@ class Game extends React.Component {
                     <p>sc: {this.state.score}</p>
                     <p>bg: {this.state.bgOffset}</p>
                     <p>item: {this.state.itemOffset}</p>
-                    <button onClick={() => this.refTest('1')}>refTest</button>
-                    <button onClick={() => this.refTest('2')}>refTest</button>
-                    <button onClick={() => this.refTest('3')}>refTest</button>
+                    <p>items:
+{/*                    {this.state.items.item1.touched === true ? 'true' : 'false'}, 
+                    {this.state.items.item2.touched === true ? 'true' : 'false'}, 
+                    {this.state.items.item3.touched === true ? 'true' : 'false'}, 
+                    {this.state.items.item4.touched === true ? 'true' : 'false'}, 
+                    {this.state.items.item5.touched === true ? 'true' : 'false'}, 
+                    {this.state.items.item6.touched === true ? 'true' : 'false'}*/}
+
+                    </p>
+                    <button onClick={() => this.refTest('1')}>item 1</button><br/>
+                    <button onClick={() => this.refTest('2')}>item 2</button><br/>
+                    <button onClick={() => this.refTest('3')}>item 3</button><br/>
+                    <button onClick={() => this.refTest('4')}>item 4</button><br/>
+                    <button onClick={() => this.refTest('5')}>item 5</button><br/>
+                    <button onClick={() => this.refTest('6')}>item 6</button><br/>
+                    <button onClick={() => console.log(this.domRefs)}>domRefs</button>
+                    <button onClick={() => console.log(this.domRefs.item1)}>domRefs</button>
                     
                 </div>
 
