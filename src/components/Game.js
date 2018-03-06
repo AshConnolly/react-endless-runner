@@ -37,6 +37,7 @@ class Game extends React.Component {
     
         this.pauseGame = this.pauseGame.bind(this); 
         this.animateElements = this.animateElements.bind(this);
+        this.refTest = this.refTest.bind(this);
     }
 
     // itemGenerator() {}
@@ -179,7 +180,12 @@ class Game extends React.Component {
             bottom: thisItem.bottom, 
             left: thisItem.left,
         }
-        return ( <div className="c-item" key={key} ref="hello" style={styles}></div> )
+        return ( <div className="c-item" key={key} ref={key} style={styles}></div> )
+    }
+
+    refTest(passed) {
+        let target = 'item' + passed;
+        console.log('refTest', this.refs[target])        
     }
 
     componentDidMount() {
@@ -252,6 +258,9 @@ class Game extends React.Component {
                     <p>sc: {this.state.score}</p>
                     <p>bg: {this.state.bgOffset}</p>
                     <p>item: {this.state.itemOffset}</p>
+                    <button onClick={() => this.refTest('1')}>refTest</button>
+                    <button onClick={() => this.refTest('2')}>refTest</button>
+                    <button onClick={() => this.refTest('3')}>refTest</button>
                     
                 </div>
 
