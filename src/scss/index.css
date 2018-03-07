@@ -54,6 +54,8 @@ body {
   background: lightgrey;
   height: 12px;
   width: 12px; }
+  .c-item.is-touched {
+    background: red; }
 
 @keyframes background-move {
   0% {

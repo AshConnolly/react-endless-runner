@@ -63,6 +63,9 @@ body {
 	background: lightgrey;
 	height:12px;
 	width:12px;
+	&.is-touched {
+		background: red;
+	}
 }
 
 $bg-elem-width: 50px;

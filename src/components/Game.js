@@ -159,13 +159,21 @@ class Game extends React.Component {
                 var isCollide = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.domRefs[item]))
                 if (isCollide === true) {
                     // here - updating state object based on 
-                    let newState = {
-                        [item] : { touched : true }
-                    }
+
+                    // get existing state
+
+                    // set target to 
+                    // let newState = {
+                    //     items : {
+                    //         [item] : { touched : true }
+                    //     }
+                    // }
+                    let currentState = this.state;
+                    let newState = currentState.items[item].touched = true
                     console.log('newState', newState)
                     // this.setState({ items : [...this.state.items, newState] })
                     //HERE SETSTATE TO TOUCHED
-                    this.setState({ items : 'hello' })
+                    this.setState({ newState })
                     console.log(`${item} true`)
                 }
                     
@@ -204,7 +212,12 @@ class Game extends React.Component {
             bottom: thisItem.bottom, 
             left: thisItem.left,
         }
-        return ( <div className={'c-item ' + key} key={key} ref={(ref) => {this.domRefs[key] = ref}} style={styles}></div> )
+        return ( 
+            <div 
+            className={'c-item ' + (this.state.items[key].touched === true ? 'is-touched' : '')} 
+            key={key} 
+            ref={(ref) => {this.domRefs[key] = ref}} 
+            style={styles}></div> )
     }
 
     refTest(passed) {
