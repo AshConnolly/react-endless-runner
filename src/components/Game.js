@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 let fps = 1/60;
 let animationFrameStatus;
-let jumpDuration = 1000;
+let jumpDuration = 400;
 
 class Game extends React.Component {
     constructor(props) {
@@ -12,18 +12,18 @@ class Game extends React.Component {
         this.state = {
             isPlaying: false,
             isJumping: false,
-            gameSpeed: 5,
+            gameSpeed: 1,
             distance: 0,
             score: 0,
             bgOffset: 0,
             itemOffset: 0,
             items: {
-                item1: {bottom: 20, left: 100, touched: false},
-                item2: {bottom: 20, left: 200, touched: false},
-                item3: {bottom: 40, left: 300, touched: false},
-                item4: {bottom: 20, left: 400, touched: false},
-                item5: {bottom: 50, left: 500, touched: false},
-                item6: {bottom: 30, left: 600, touched: false}
+                item1: {bottom: 20, left: 300, touched: false},
+                item2: {bottom: 20, left: 400, touched: false},
+                item3: {bottom: 40, left: 500, touched: false},
+                item4: {bottom: 20, left: 600, touched: false},
+                item5: {bottom: 50, left: 700, touched: false},
+                item6: {bottom: 30, left: 800, touched: false}
             }
         };
 
@@ -268,26 +268,26 @@ class Game extends React.Component {
                     <p>a: {this.state.isPlaying === true ? 'true' : 'false'}</p>
                     <p>d: {this.state.distance}</p>
                     <p>sp: {this.state.gameSpeed}</p>
-                    <p>sc: {this.state.score}</p>
+                    <h4 style={{margin: '5px 0'}}>sc: {this.state.score}</h4>
                     <p>bg: {this.state.bgOffset}</p>
                     <p>item: {this.state.itemOffset}</p>
                     <p>items:
-{/*                    {this.state.items.item1.touched === true ? 'true' : 'false'}, 
+                    {this.state.items.item1.touched === true ? 'true' : 'false'}, 
                     {this.state.items.item2.touched === true ? 'true' : 'false'}, 
                     {this.state.items.item3.touched === true ? 'true' : 'false'}, 
                     {this.state.items.item4.touched === true ? 'true' : 'false'}, 
                     {this.state.items.item5.touched === true ? 'true' : 'false'}, 
-                    {this.state.items.item6.touched === true ? 'true' : 'false'}*/}
+                    {this.state.items.item6.touched === true ? 'true' : 'false'}
 
                     </p>
-                    <button onClick={() => this.refTest('1')}>item 1</button><br/>
+{/*                    <button onClick={() => this.refTest('1')}>item 1</button><br/>
                     <button onClick={() => this.refTest('2')}>item 2</button><br/>
                     <button onClick={() => this.refTest('3')}>item 3</button><br/>
                     <button onClick={() => this.refTest('4')}>item 4</button><br/>
                     <button onClick={() => this.refTest('5')}>item 5</button><br/>
                     <button onClick={() => this.refTest('6')}>item 6</button><br/>
                     <button onClick={() => console.log(this.domRefs)}>domRefs</button>
-                    <button onClick={() => console.log(this.domRefs.item1)}>domRefs</button>
+                    <button onClick={() => console.log(this.domRefs.item1)}>domRefs</button>*/}
                     
                 </div>
 
