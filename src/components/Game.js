@@ -142,61 +142,35 @@ class Game extends React.Component {
             this.setState({ distance: this.state.distance + 0.01  })
 
 
-           // collision detection
-            /* TODO loop thourgh all children in state object and create hit detection for refs 
-             eg - https://stackoverflow.com/questions/35601904/react-get-all-children-refs
-             */
-
+            // collision detection - looping through elements in state.items
             // for each element in the state.items 
             // collision detection
             // add class to it as touched
-
-            let collisionObject = {};
+        
             Object.keys(this.state.items).forEach((item) => {
                 console.log(item + 'wtf')
-                // console.log('this.refs[item]', this.domRefs[item])
-                // console.log('this.refs.player', this.refs.player)
                 var isCollide = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.domRefs[item]))
                 if (isCollide === true) {
-                    // here - updating state object based on 
-
-                    // get existing state
-
-                    // set target to 
-                    // let newState = {
-                    //     items : {
-                    //         [item] : { touched : true }
-                    //     }
-                    // }
-                    let currentState = this.state;
-                    let newState = currentState.items[item].touched = true
-                    console.log('newState', newState)
-                    // this.setState({ items : [...this.state.items, newState] })
-                    //HERE SETSTATE TO TOUCHED
-                    this.setState({ newState })
-                    console.log(`${item} true`)
-                }
+                    let newState = this.state;
                     
-                    collisionObject[item] = isCollide;
+                    // increase score + update state of item as `touched`                    
+                    if (this.state.items[item].touched === false) {
+                        this.setState({ score: this.state.score + 1 })  
+                        newState.items[item].touched = true;
+                        this.setState({ newState })
+                    }
+                    console.log('newState', newState)
+                }
             })
 
             // check if element is off left of page.
-
-            console.log('collisionObject', collisionObject)
-
-        // let obj = this.state.items;
-        // for (var property in obj) {
-        //     if (obj.hasOwnProperty(property)) {
-        //         console.log(property)
-        //     }
-        // }
             
             // also add in a class addition to prevent scores increasing several times for each hit 
             // let item1 = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.domRrefs.item1));
             // let item2 = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.domRefs.item2));
             // var item3= detectCollision(this.getBounds(this.refs.player), this.getBounds(this.domRefs.item3));
             // if (item1 === true || item2 === true || item3 === true) {
-                // this.setState({ score: this.state.score + 1 })                    
+            //     this.setState({ score: this.state.score + 1 })                    
             // }
         }
 
