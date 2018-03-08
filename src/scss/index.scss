@@ -52,7 +52,7 @@ body {
 	width:12px;
 	border-radius: 50%;
 	// animation-timing-function: cubic-bezier(0.45, 1.07, 0.76, 1);
-	animation-timing-function: cubic-bezier(0.12, 0.7, 0.44, 1.01;
+	animation-timing-function: cubic-bezier(0.12, 0.7, 0.44, 1.01);
 	// animation-duration: 1s;
 	&.is-jumping {
 		animation-name: player-jump;
@@ -64,7 +64,7 @@ body {
 	background: lightgrey;
 	height:12px;
 	width:12px;
-	transition:
+	// transition:
 	&.is-touched {
 		background: red;
 	}

@@ -37,7 +37,7 @@ body {
   height: 12px;
   width: 12px;
   border-radius: 50%;
-  animation-timing-function: cubic-bezier(0.45, 1.07, 0.76, 1); }
+  animation-timing-function: cubic-bezier(0.12, 0.7, 0.44, 1.01); }
 
 @keyframes player-jump {
   0% {
