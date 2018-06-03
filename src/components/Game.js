@@ -148,7 +148,7 @@ class Game extends React.Component {
             // add class to it as touched
         
             Object.keys(this.state.items).forEach((item) => {
-                console.log(item + 'wtf')
+                console.log(item + ' test')
                 var isCollide = detectCollision(this.getBounds(this.refs.player), this.getBounds(this.domRefs[item]))
                 if (isCollide === true) {
                     let newState = this.state;
